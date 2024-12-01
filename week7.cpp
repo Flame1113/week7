@@ -6,11 +6,11 @@ bool checkValid(string&, bool&);
 void format(string&);
 void display(string, bool);
 void checkNegative(bool&, string&);
-
+void displayNames();
 int main(){
     string digit;
     bool neg = false;
-
+    displayNames();
     while (true){
         cout << "Enter a 12 digit (maximum) precision number: ";
         cin >> digit;
@@ -27,17 +27,18 @@ int main(){
 
 bool checkValid(string &check, bool& neg){
     int digs = 0;
+    int dec = check.find(".");
     for (int rep = 0; rep < check.length(); rep++){
         if (isdigit(check.at(rep))){
             digs += 1;
         }
+        else if (!isdigit(check.at(rep)) && dec != rep){
+            cout << "All values must be numeric except for optional negative and optional decimal point" << endl;
+            return false;
+        }
     }
     if (digs > 12){
         cout << "Too many digits" << endl;
-        return false;
-    }
-    else if (check.length() > 13){
-        cout << "Too many characters" << endl;
         return false;
     }
     else if (check == "0"){
@@ -49,7 +50,7 @@ bool checkValid(string &check, bool& neg){
 
 void format(string &digit){
     int dec = digit.find(".");
-    int start = digit.find(".");
+    int start = dec;
 
     if (dec == -1){
         start = digit.length();
@@ -87,4 +88,12 @@ void checkNegative(bool &neg, string &digit){
             neg = true;
             digit = digit.substr(1);
     }
+}
+
+void displayNames(){
+    cout << "Student name:" << setw(18) << "Glen Dsouza" << endl;
+    cout << "Student number:" << setw(14) << "900914917" << endl;
+    cout << "Student name:" << setw(24) << "Jordon Marchesano" << endl;
+    cout << "Student number:" << setw(14) << "900536880" << endl;
+    cout << endl << endl;
 }
