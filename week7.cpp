@@ -2,7 +2,7 @@
 #include <string>
 #include <iomanip>
 using namespace std;
-bool checkValid(string);
+bool checkValid(string&);
 void format(string&);
 void display(string, bool);
 void checkNegative(bool&, string&);
@@ -24,10 +24,7 @@ int main(){
     return 0;
 }
 
-bool checkValid(string check){
-    if (check.length() > 13){
-        return false;
-    }
+bool checkValid(string &check){
     int digs = 0;
     for (int rep = 0; rep < check.length(); rep++){
         if (isdigit(check.at(rep))){
@@ -35,19 +32,30 @@ bool checkValid(string check){
         }
     }
     if (digs > 12){
+        cout << "Too many digits" << endl;
         return false;
     }
-    if (check.find('.') == -1){
+    else if (check.length() > 13){
+        cout << "Too many characters" << endl;
         return false;
     }
-    if (!(check.find('.') == check.length()-3 || check.find('.') == check.length()-4)){
+    else if (check == "0"){
+        check = "0.00";
+        return true;
+    }
+    else if (check.find(".") == -1){
+        cout << "No decimal found" << endl;
+        return false;
+    }
+    else if (!(check.find(".") == check.length()-3 || check.find(".") == check.length()-4)){
+        cout << "Decimal not in the right position" << endl;
         return false;
     }
     return true;
 }
 
 void format(string &digit){
-    int dec = digit.find('.');
+    int dec = digit.find(".");
     if (dec == -1){
         dec = digit.length();
     }
@@ -56,7 +64,7 @@ void format(string &digit){
             digit.insert(rep, ",");
         }
     }
-    if (digit.find('.') == digit.length()-4){
+    if (digit.find(".") == digit.length()-4){
         digit.erase(digit.length() -1, 1);
     }
     digit.insert(0, "$");
