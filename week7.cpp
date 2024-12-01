@@ -33,7 +33,7 @@ bool checkValid(string &check, bool& neg){
             digs += 1;
         }
         else if (!isdigit(check.at(rep)) && dec != rep){
-            cout << "All values must be numeric except for optional negative and optional decimal point" << endl;
+            cout << "All values must be numeric except for optional negative in first position and optional decimal point" << endl;
             return false;
         }
     }
