@@ -2,10 +2,11 @@
 #include <string>
 #include <iomanip>
 using namespace std;
-bool checkValid(string&);
+bool checkValid(string&, bool&);
 void format(string&);
 void display(string, bool);
 void checkNegative(bool&, string&);
+
 int main(){
     string digit;
     bool neg = false;
@@ -14,7 +15,7 @@ int main(){
         cout << "Enter a 12 digit (maximum) precision number: ";
         cin >> digit;
         checkNegative(neg, digit);
-        if (checkValid(digit)) break;
+        if (checkValid(digit,neg)) break;
     }
 
     format(digit);
@@ -24,7 +25,7 @@ int main(){
     return 0;
 }
 
-bool checkValid(string &check){
+bool checkValid(string &check, bool& neg){
     int digs = 0;
     for (int rep = 0; rep < check.length(); rep++){
         if (isdigit(check.at(rep))){
@@ -41,6 +42,7 @@ bool checkValid(string &check){
     }
     else if (check == "0"){
         check = "0.00";
+        neg = false;
         return true;
     }
     else if (check.find(".") == -1){
