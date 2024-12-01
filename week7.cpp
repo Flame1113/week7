@@ -41,33 +41,33 @@ bool checkValid(string &check, bool& neg){
         return false;
     }
     else if (check == "0"){
-        check = "0.00";
         neg = false;
         return true;
-    }
-    else if (check.find(".") == -1){
-        cout << "No decimal found" << endl;
-        return false;
-    }
-    else if (!(check.find(".") == check.length()-3 || check.find(".") == check.length()-4)){
-        cout << "Decimal not in the right position" << endl;
-        return false;
     }
     return true;
 }
 
 void format(string &digit){
     int dec = digit.find(".");
+    int start = digit.find(".");
+
     if (dec == -1){
-        dec = digit.length();
+        start = digit.length();
     }
-    for (int rep = dec; rep > 0; rep -= 3){
-        if (rep != dec){
+    else if (dec == digit.length()-2){
+        digit.append("0");
+    }
+    else if (dec != -1){
+        //Do dec + 3 because dec + 1 will give us the amount up to and including the decimal
+        // but since we want the stop 2 spots higher for the 2 decimal points we have to add 2
+        digit = digit.substr(0,dec+3);
+    }
+
+
+    for (int rep = start; rep > 0; rep -= 3){
+        if (rep != start){
             digit.insert(rep, ",");
         }
-    }
-    if (digit.find(".") == digit.length()-4){
-        digit.erase(digit.length() -1, 1);
     }
     digit.insert(0, "$");
 }
